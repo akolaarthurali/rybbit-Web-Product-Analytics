@@ -23,7 +23,7 @@ import { Upload, FileText, AlertCircle, CheckCircle2, Clock, Loader2, Trash2, In
 import { useGetSiteImports, useCreateSiteImport, useDeleteSiteImport } from "@/api/admin/import";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { IS_CLOUD } from "@/lib/const";
-import { CSVWorkerManager } from "@/lib/import/csv-worker-manager";
+import { CsvParser } from "@/lib/import/csvParser";
 
 interface ImportManagerProps {
   siteId: number;
@@ -66,7 +66,7 @@ export function ImportManager({ siteId, disabled }: ImportManagerProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const workerManagerRef = useRef<CSVWorkerManager | null>(null);
+  const workerManagerRef = useRef<CsvParser | null>(null);
 
   const { data, isLoading, error } = useGetSiteImports(siteId);
   const createImportMutation = useCreateSiteImport(siteId);
@@ -103,7 +103,7 @@ export function ImportManager({ siteId, disabled }: ImportManagerProps) {
       onSuccess: response => {
         const { importId, allowedDateRange } = response.data;
 
-        workerManagerRef.current = new CSVWorkerManager();
+        workerManagerRef.current = new CsvParser();
 
         workerManagerRef.current.startImport(
           file,

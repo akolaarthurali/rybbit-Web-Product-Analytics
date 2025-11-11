@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { authedFetch } from "@/api/utils";
 import { APIResponse } from "@/api/types";
-import type { AllowedDateRange } from "@/lib/import/types";
 
 interface GetSiteImportsResponse {
   importId: string;
@@ -14,7 +13,10 @@ interface GetSiteImportsResponse {
 
 interface CreateSiteImportResponse {
   importId: string;
-  allowedDateRange: AllowedDateRange;
+  allowedDateRange: {
+    earliestAllowedDate: string;
+    latestAllowedDate: string;
+  };
 }
 
 interface DeleteImportResponse {

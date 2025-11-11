@@ -1,9 +1,32 @@
 import Papa from "papaparse";
 import { DateTime } from "luxon";
 import { authedFetch } from "@/api/utils";
-import type { UmamiEvent } from "./types";
 
-export class CSVWorkerManager {
+interface UmamiEvent {
+  session_id: string;
+  hostname: string;
+  browser: string;
+  os: string;
+  device: string;
+  screen: string;
+  language: string;
+  country: string;
+  region: string;
+  city: string;
+  url_path: string;
+  url_query: string;
+  referrer_path: string;
+  referrer_query: string;
+  referrer_domain: string;
+  page_title: string;
+  event_type: string;
+  event_name: string;
+  distinct_id: string;
+  created_at: string;
+}
+
+
+export class CsvParser {
   private aborted = false;
   private quotaExceeded = false;
   private siteId: number = 0;
@@ -30,12 +53,12 @@ export class CSVWorkerManager {
     this.latestAllowedDate = DateTime.fromFormat(latestAllowedDate, "yyyy-MM-dd", { zone: "utc" }).endOf("day");
 
     if (!this.earliestAllowedDate.isValid) {
-      this.handleError(`Invalid earliest allowed date: ${earliestAllowedDate}`);
+      this.aborted = true;
       return;
     }
 
     if (!this.latestAllowedDate.isValid) {
-      this.handleError(`Invalid latest allowed date: ${latestAllowedDate}`);
+      this.aborted = true;
       return;
     }
 
@@ -67,9 +90,9 @@ export class CSVWorkerManager {
         this.parsingComplete = true;
         this.processQueue();
       },
-      error: error => {
+      error: () => {
         if (this.aborted) return;
-        this.handleError(error.message);
+        this.aborted = true;
       },
     });
   }
@@ -145,10 +168,6 @@ export class CSVWorkerManager {
     return umamiEvent;
   }
 
-  private handleError(message: string): void {
-    this.terminate();
-  }
-
   private async uploadChunk(events: UmamiEvent[], isLastBatch: boolean): Promise<void> {
     if (this.quotaExceeded) {
       return;
@@ -177,13 +196,8 @@ export class CSVWorkerManager {
         return;
       }
     } catch (error) {
-      // Critical failure - network error, server error, etc.
-      this.terminate();
+      this.aborted = true;
       return;
     }
-  }
-
-  terminate(): void {
-    this.aborted = true;
   }
 }
