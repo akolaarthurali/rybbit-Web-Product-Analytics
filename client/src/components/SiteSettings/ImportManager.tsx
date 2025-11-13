@@ -5,6 +5,7 @@ import { DateTime } from "luxon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
   AlertDialog,
@@ -64,6 +65,7 @@ export function ImportManager({ siteId, disabled }: ImportManagerProps) {
   const [deleteImportId, setDeleteImportId] = useState<string | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedPlatform, setSelectedPlatform] = useState<"umami">("umami");
   const [fileError, setFileError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const workerManagerRef = useRef<CsvParser | null>(null);
@@ -99,30 +101,34 @@ export function ImportManager({ siteId, disabled }: ImportManagerProps) {
   const executeImport = (file: File) => {
     if (!file) return;
 
-    createImportMutation.mutate(undefined, {
-      onSuccess: response => {
-        const { importId, allowedDateRange } = response.data;
+    createImportMutation.mutate(
+      { platform: selectedPlatform },
+      {
+        onSuccess: response => {
+          const { importId, allowedDateRange } = response.data;
 
-        workerManagerRef.current = new CsvParser();
+          workerManagerRef.current = new CsvParser();
 
-        workerManagerRef.current.startImport(
-          file,
-          siteId,
-          importId,
-          allowedDateRange.earliestAllowedDate,
-          allowedDateRange.latestAllowedDate
-        );
+          workerManagerRef.current.startImport(
+            file,
+            siteId,
+            importId,
+            selectedPlatform,
+            allowedDateRange.earliestAllowedDate,
+            allowedDateRange.latestAllowedDate
+          );
 
-        setSelectedFile(null);
-        setFileError("");
-        if (fileInputRef.current) {
-          fileInputRef.current.value = "";
-        }
-      },
-      onError: error => {
-        console.error("Failed to create import:", error);
-      },
-    });
+          setSelectedFile(null);
+          setFileError("");
+          if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+          }
+        },
+        onError: error => {
+          console.error("Failed to create import:", error);
+        },
+      }
+    );
 
     setShowConfirmDialog(false);
   };
@@ -204,6 +210,20 @@ export function ImportManager({ siteId, disabled }: ImportManagerProps) {
           )}
 
           <form onSubmit={onSubmit} className="space-y-4">
+            {/* Platform Selection */}
+            <div className="space-y-2">
+              <Label htmlFor="platform">Platform</Label>
+              <Select value={selectedPlatform} onValueChange={(value: "umami") => setSelectedPlatform(value)}>
+                <SelectTrigger id="platform" disabled={disabled || createImportMutation.isPending || hasActiveImport}>
+                  <SelectValue placeholder="Select platform" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="umami">Umami</SelectItem>
+                </SelectContent>
+              </Select>
+              <p className="text-sm text-muted-foreground">Select the analytics platform you're importing data from</p>
+            </div>
+
             {/* File Upload */}
             <div className="space-y-2">
               <Label htmlFor="file" className="flex items-center gap-2">
@@ -337,7 +357,7 @@ export function ImportManager({ siteId, disabled }: ImportManagerProps) {
                         <TableCell className="font-medium">{startedAt}</TableCell>
                         <TableCell>
                           <Badge variant="outline" className="capitalize">
-                            {imp.platform || "N/A"}
+                            {imp.platform}
                           </Badge>
                         </TableCell>
                         <TableCell>

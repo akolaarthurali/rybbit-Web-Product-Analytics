@@ -6,7 +6,7 @@ import { updateImportProgress, completeImport, getImportById } from "../../servi
 import { UmamiImportMapper } from "../../services/import/mappings/umami.js";
 import { importQuotaManager } from "../../services/import/importQuotaManager.js";
 import { db } from "../../db/postgres/postgres.js";
-import { sites, importStatus } from "../../db/postgres/schema.js";
+import { sites } from "../../db/postgres/schema.js";
 import { eq } from "drizzle-orm";
 
 const batchImportRequestSchema = z
@@ -62,19 +62,8 @@ export async function batchImportEvents(request: FastifyRequest<BatchImportReque
       return reply.status(400).send({ error: "Import already completed" });
     }
 
-    // Auto-detect platform if not set (first batch)
-    let detectedPlatform = importRecord.platform;
-    if (!detectedPlatform) {
-      const firstEvent = events[0];
-
-      if (UmamiImportMapper.umamiEventKeyOnlySchema.safeParse(firstEvent).success) {
-        detectedPlatform = "umami";
-      } else {
-        return reply.status(400).send({ error: "Unable to detect platform from event structure" });
-      }
-
-      await db.update(importStatus).set({ platform: detectedPlatform }).where(eq(importStatus.importId, importId));
-    }
+    // Platform is set during import creation
+    const platform = importRecord.platform;
 
     const [siteRecord] = await db
       .select({ organizationId: sites.organizationId })

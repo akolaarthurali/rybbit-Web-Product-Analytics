@@ -36,6 +36,7 @@ export class CsvParser {
   private aborted = false;
   private siteId: number = 0;
   private importId: string = "";
+  private platform: "umami" = "umami";
 
   private earliestAllowedDate: DateTime | null = null;
   private latestAllowedDate: DateTime | null = null;
@@ -56,12 +57,14 @@ export class CsvParser {
     file: File,
     siteId: number,
     importId: string,
+    platform: "umami",
     earliestAllowedDate: string,
     latestAllowedDate: string,
     onProgress?: (progress: ImportProgress) => void
   ): void {
     this.siteId = siteId;
     this.importId = importId;
+    this.platform = platform;
     this.onProgress = onProgress;
 
     this.earliestAllowedDate = DateTime.fromFormat(earliestAllowedDate, "yyyy-MM-dd", { zone: "utc" }).startOf("day");

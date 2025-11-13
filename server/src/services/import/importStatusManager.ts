@@ -1,10 +1,26 @@
 import { db } from "../../db/postgres/postgres.js";
 import { eq, desc, sql } from "drizzle-orm";
-import { importStatus } from "../../db/postgres/schema.js";
+import { importPlatforms, importStatus } from "../../db/postgres/schema.js";
 import { DateTime } from "luxon";
 
 export type SelectImportStatus = typeof importStatus.$inferSelect;
-export type InsertImportStatus = typeof importStatus.$inferInsert;
+
+export async function createImport(data: {
+  siteId: number;
+  organizationId: string;
+  platform: (typeof importPlatforms)[number];
+}): Promise<{ importId: string }> {
+  const [result] = await db
+    .insert(importStatus)
+    .values({
+      siteId: data.siteId,
+      organizationId: data.organizationId,
+      platform: data.platform,
+    })
+    .returning({ importId: importStatus.importId });
+
+  return result;
+}
 
 export async function updateImportProgress(
   importId: string,

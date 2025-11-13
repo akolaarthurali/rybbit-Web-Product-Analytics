@@ -1,10 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { getUserHasAdminAccessToSite } from "../../lib/auth-utils.js";
 import { importQuotaManager } from "../../services/import/importQuotaManager.js";
+import { createImport } from "../../services/import/importStatusManager.js";
 import { DateTime } from "luxon";
 import { z } from "zod";
 import { db } from "../../db/postgres/postgres.js";
-import { sites, importStatus } from "../../db/postgres/schema.js";
+import { importPlatforms, sites } from "../../db/postgres/schema.js";
 import { eq } from "drizzle-orm";
 
 const createSiteImportRequestSchema = z
@@ -12,17 +13,22 @@ const createSiteImportRequestSchema = z
     params: z.object({
       site: z.string().min(1),
     }),
+    body: z.object({
+      platform: z.enum(importPlatforms),
+    }),
   })
   .strict();
 
 type CreateSiteImportRequest = {
   Params: z.infer<typeof createSiteImportRequestSchema.shape.params>;
+  Body: z.infer<typeof createSiteImportRequestSchema.shape.body>;
 };
 
 export async function createSiteImport(request: FastifyRequest<CreateSiteImportRequest>, reply: FastifyReply) {
   try {
     const parsed = createSiteImportRequestSchema.safeParse({
       params: request.params,
+      body: request.body,
     });
 
     if (!parsed.success) {
@@ -30,6 +36,7 @@ export async function createSiteImport(request: FastifyRequest<CreateSiteImportR
     }
 
     const { site } = parsed.data.params;
+    const { platform } = parsed.data.body;
     const siteId = Number(site);
 
     const userHasAccess = await getUserHasAdminAccessToSite(request, site);
@@ -64,14 +71,12 @@ export async function createSiteImport(request: FastifyRequest<CreateSiteImportR
     const earliestAllowedDate = oldestAllowedDate.toFormat("yyyy-MM-dd");
     const latestAllowedDate = DateTime.utc().toFormat("yyyy-MM-dd");
 
-    // Create import record (DB generates importId)
-    const [importRecord] = await db
-      .insert(importStatus)
-      .values({
-        siteId,
-        organizationId,
-      })
-      .returning({ importId: importStatus.importId });
+    // Create import record using importStatusManager
+    const importRecord = await createImport({
+      siteId,
+      organizationId,
+      platform,
+    });
 
     return reply.send({
       data: {

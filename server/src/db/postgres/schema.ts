@@ -622,7 +622,9 @@ export const gscConnections = pgTable("gsc_connections", {
   updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow().notNull(),
 });
 
-export const importPlatformEnum = pgEnum("import_platform_enum", ["umami"]);
+export const importPlatforms = ["umami"] as const;
+
+export const importPlatformEnum = pgEnum("import_platform_enum", importPlatforms);
 
 export const importStatus = pgTable(
   "import_status",
@@ -630,7 +632,7 @@ export const importStatus = pgTable(
     importId: uuid("import_id").primaryKey().notNull().defaultRandom(),
     siteId: integer("site_id").notNull(),
     organizationId: text("organization_id").notNull(),
-    platform: importPlatformEnum("platform"),
+    platform: importPlatformEnum("platform").notNull(),
     importedEvents: integer("imported_events").notNull().default(0),
     skippedEvents: integer("skipped_events").notNull().default(0),
     invalidEvents: integer("invalid_events").notNull().default(0),

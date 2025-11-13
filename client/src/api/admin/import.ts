@@ -4,7 +4,7 @@ import { APIResponse } from "@/api/types";
 
 interface GetSiteImportsResponse {
   importId: string;
-  platform: "umami" | null;
+  platform: "umami";
   importedEvents: number;
   skippedEvents: number;
   invalidEvents: number;
@@ -42,9 +42,10 @@ export function useCreateSiteImport(site: number) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: async (data: { platform: "umami" }) => {
       return await authedFetch<APIResponse<CreateSiteImportResponse>>(`/create-site-import/${site}`, undefined, {
         method: "POST",
+        data,
       });
     },
     onSuccess: async () => {
