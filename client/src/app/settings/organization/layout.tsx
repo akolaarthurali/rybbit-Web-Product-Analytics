@@ -30,7 +30,7 @@ export default function OrganizationLayout({ children }: { children: React.React
       <div className="space-y-5">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Organization Settings</h1>
-          <p className="text-gray-500 dark:text-gray-400">Manage your organization settings and members</p>
+          <p className="text-neutral-500 dark:text-neutral-400">Manage your organization settings and members</p>
         </div>
 
         <div className="flex items-center gap-2">
