@@ -3,15 +3,20 @@ import {
   Activity,
   Calculator,
   DollarSign,
+  Eye,
   FileText,
   Gauge,
   Link as LinkIcon,
   MousePointerClick,
+  PlayCircle,
   Search,
   Share2,
   Sparkles,
+  Target,
   TrendingDown,
+  TrendingUp,
   Type,
+  UserCheck,
   Users,
 } from "lucide-react";
 
@@ -125,6 +130,62 @@ const tools = [
     description:
       "Generate a customized privacy policy for your website. Answer a few questions and get a compliant privacy policy instantly.",
     category: "Legal",
+  },
+  {
+    href: "/tools/cost-per-acquisition-calculator",
+    icon: Target,
+    title: "Cost Per Acquisition (CPA) Calculator",
+    description:
+      "Calculate your customer acquisition costs and compare against industry benchmarks to optimize your marketing ROI.",
+    category: "Analytics",
+  },
+  {
+    href: "/tools/retention-rate-calculator",
+    icon: UserCheck,
+    title: "Retention Rate Calculator",
+    description:
+      "Calculate customer retention rates and compare against industry benchmarks to improve customer loyalty and reduce churn.",
+    category: "Analytics",
+  },
+  {
+    href: "/tools/conversion-rate-calculator",
+    icon: TrendingUp,
+    title: "Conversion Rate Calculator",
+    description:
+      "Calculate conversion rates and compare against industry benchmarks to optimize your marketing funnel and maximize ROI.",
+    category: "Analytics",
+  },
+  {
+    href: "/tools/cost-per-mille-calculator",
+    icon: Eye,
+    title: "CPM Calculator (Cost Per Mille)",
+    description:
+      "Calculate cost per thousand impressions and compare across advertising platforms to optimize your media spend.",
+    category: "Analytics",
+  },
+  {
+    href: "/tools/customer-lifetime-value-calculator",
+    icon: DollarSign,
+    title: "Customer Lifetime Value (CLV) Calculator",
+    description:
+      "Calculate customer lifetime value with retention analysis and profit margins to optimize acquisition spending and maximize long-term revenue.",
+    category: "Analytics",
+  },
+  {
+    href: "/tools/cost-per-lead-calculator",
+    icon: Users,
+    title: "Cost Per Lead (CPL) Calculator",
+    description:
+      "Calculate cost per lead and compare across marketing channels to optimize your lead generation strategy and maximize ROI.",
+    category: "Analytics",
+  },
+  {
+    href: "/tools/cost-per-view-calculator",
+    icon: PlayCircle,
+    title: "Cost Per View (CPV) Calculator",
+    description:
+      "Calculate cost per view for video ads and compare across platforms to optimize your video advertising strategy and maximize engagement.",
+    category: "Analytics",
   },
 ];
 

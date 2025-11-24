@@ -118,31 +118,31 @@ const educationalContent = (
       <p>Tracking marketing ROI is essential for sustainable business growth. It helps you:</p>
       <ul className="space-y-3 mt-4">
         <li className="flex gap-3">
-          <span className="text-emerald-600 dark:text-emerald-400 font-bold">•</span>
+          
           <span>
             <strong>Justify marketing budgets</strong> to stakeholders with clear financial metrics
           </span>
         </li>
         <li className="flex gap-3">
-          <span className="text-emerald-600 dark:text-emerald-400 font-bold">•</span>
+          
           <span>
             <strong>Identify top-performing channels</strong> and allocate budget accordingly
           </span>
         </li>
         <li className="flex gap-3">
-          <span className="text-emerald-600 dark:text-emerald-400 font-bold">•</span>
+          
           <span>
             <strong>Reduce wasted ad spend</strong> on underperforming campaigns
           </span>
         </li>
         <li className="flex gap-3">
-          <span className="text-emerald-600 dark:text-emerald-400 font-bold">•</span>
+          
           <span>
             <strong>Optimize customer acquisition costs</strong> across your marketing mix
           </span>
         </li>
         <li className="flex gap-3">
-          <span className="text-emerald-600 dark:text-emerald-400 font-bold">•</span>
+          
           <span>
             <strong>Make data-driven decisions</strong> about marketing strategy and tactics
           </span>

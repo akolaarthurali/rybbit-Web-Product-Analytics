@@ -282,6 +282,35 @@ The `educationalContent` section should be comprehensive and helpful:
 - Keep paragraphs concise and scannable
 - Add examples to illustrate concepts
 
+### **IMPORTANT: List Item Formatting**
+
+**DO NOT** add manual bullet points (`•`) to list items. The ToolPageLayout component automatically styles list items with bullets.
+
+❌ **WRONG:**
+```tsx
+<ul className="space-y-2 mb-6">
+  <li className="flex items-start text-neutral-700 dark:text-neutral-300">
+    <span className="text-emerald-500 mr-2">•</span>
+    <span>
+      <strong>Item:</strong> Description
+    </span>
+  </li>
+</ul>
+```
+
+✅ **CORRECT:**
+```tsx
+<ul className="space-y-2 mb-6">
+  <li className="flex items-start text-neutral-700 dark:text-neutral-300">
+    <span>
+      <strong>Item:</strong> Description
+    </span>
+  </li>
+</ul>
+```
+
+The component's CSS handles bullet styling automatically, so adding `<span className="text-emerald-500 mr-2">•</span>` creates duplicate bullets.
+
 ## FAQ Guidelines
 
 Aim for 4-6 FAQs that cover:

@@ -93,6 +93,48 @@ const allTools: Tool[] = [
     href: "/tools/privacy-policy-builder",
     category: "privacy",
   },
+  {
+    name: "Cost Per Acquisition Calculator",
+    description: "Calculate customer acquisition costs and compare benchmarks",
+    href: "/tools/cost-per-acquisition-calculator",
+    category: "analytics",
+  },
+  {
+    name: "Retention Rate Calculator",
+    description: "Calculate and optimize customer retention rates",
+    href: "/tools/retention-rate-calculator",
+    category: "analytics",
+  },
+  {
+    name: "Conversion Rate Calculator",
+    description: "Calculate conversion rates and optimize your funnel",
+    href: "/tools/conversion-rate-calculator",
+    category: "analytics",
+  },
+  {
+    name: "CPM Calculator",
+    description: "Calculate cost per thousand impressions across platforms",
+    href: "/tools/cost-per-mille-calculator",
+    category: "analytics",
+  },
+  {
+    name: "Customer Lifetime Value Calculator",
+    description: "Calculate CLV with retention analysis and profit margins",
+    href: "/tools/customer-lifetime-value-calculator",
+    category: "analytics",
+  },
+  {
+    name: "Cost Per Lead Calculator",
+    description: "Calculate CPL and compare across marketing channels",
+    href: "/tools/cost-per-lead-calculator",
+    category: "analytics",
+  },
+  {
+    name: "Cost Per View Calculator",
+    description: "Calculate CPV for video ads across platforms",
+    href: "/tools/cost-per-view-calculator",
+    category: "analytics",
+  },
 ];
 
 interface RelatedToolsProps {

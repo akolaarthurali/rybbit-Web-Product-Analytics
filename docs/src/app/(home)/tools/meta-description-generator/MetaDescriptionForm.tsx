@@ -159,7 +159,7 @@ export function MetaDescriptionForm() {
                     <span className={`font-medium ${getLengthColor(option.length)}`}>
                       {option.length} characters
                     </span>
-                    <span className="text-neutral-500 dark:text-neutral-400">•</span>
+                    
                     <span className="text-neutral-600 dark:text-neutral-400">{option.approach}</span>
                   </div>
                 </div>

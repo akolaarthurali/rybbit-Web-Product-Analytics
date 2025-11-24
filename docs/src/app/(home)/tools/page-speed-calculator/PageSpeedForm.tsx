@@ -263,10 +263,10 @@ export function PageSpeedForm() {
               }`}>
                 <h3 className="font-semibold mb-2">Impact Summary:</h3>
                 <ul className="text-sm space-y-1">
-                  <li>• Improving load time from <strong>{currentLoadTime}s</strong> to <strong>{targetLoadTime}s</strong></li>
-                  <li>• Conversion rate changes from <strong>{parseFloat(conversionRate).toFixed(2)}%</strong> to <strong>{metrics.newConversionRate.toFixed(2)}%</strong></li>
-                  <li>• Potential revenue impact: <strong>${Math.abs(metrics.monthlyImpact).toLocaleString(undefined, { maximumFractionDigits: 0 })}/month</strong> ({metrics.monthlyImpact >= 0 ? "gain" : "loss"})</li>
-                  <li>• Based on industry research: 7% conversion impact per second of load time</li>
+                  <li>Improving load time from <strong>{currentLoadTime}s</strong> to <strong>{targetLoadTime}s</strong></li>
+                  <li>Conversion rate changes from <strong>{parseFloat(conversionRate).toFixed(2)}%</strong> to <strong>{metrics.newConversionRate.toFixed(2)}%</strong></li>
+                  <li>Potential revenue impact: <strong>${Math.abs(metrics.monthlyImpact).toLocaleString(undefined, { maximumFractionDigits: 0 })}/month</strong> ({metrics.monthlyImpact >= 0 ? "gain" : "loss"})</li>
+                  <li>Based on industry research: 7% conversion impact per second of load time</li>
                 </ul>
               </div>
             </div>

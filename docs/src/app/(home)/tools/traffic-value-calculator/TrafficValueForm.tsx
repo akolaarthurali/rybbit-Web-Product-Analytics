@@ -183,9 +183,9 @@ export function TrafficValueForm() {
               <div className="p-4 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-900 rounded-lg">
                 <h3 className="font-semibold text-emerald-900 dark:text-emerald-200 mb-2">What this means:</h3>
                 <ul className="text-sm text-emerald-900 dark:text-emerald-200 space-y-1">
-                  <li>• Each visitor is worth <strong>${metrics.valuePerVisitor.toFixed(2)}</strong> in profit</li>
+                  <li>Each visitor is worth <strong>${metrics.valuePerVisitor.toFixed(2)}</strong> in profit</li>
                   <li>
-                    • A <strong>10% traffic increase</strong> would add{" "}
+                    A <strong>10% traffic increase</strong> would add{" "}
                     <strong>
                       ${(metrics.profit * 0.1).toLocaleString(undefined, { maximumFractionDigits: 0 })}
                       /month
@@ -193,7 +193,7 @@ export function TrafficValueForm() {
                     in profit
                   </li>
                   <li>
-                    • A <strong>1% conversion rate improvement</strong> would add{" "}
+                    A <strong>1% conversion rate improvement</strong> would add{" "}
                     <strong>
                       $
                       {(
@@ -207,7 +207,7 @@ export function TrafficValueForm() {
                     </strong>{" "}
                     in profit
                   </li>
-                  <li>• You can afford to spend up to <strong>${metrics.valuePerVisitor.toFixed(2)}</strong> per visitor on acquisition</li>
+                  <li>You can afford to spend up to <strong>${metrics.valuePerVisitor.toFixed(2)}</strong> per visitor on acquisition</li>
                 </ul>
               </div>
             </div>

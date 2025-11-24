@@ -155,10 +155,10 @@ export function SampleSizeForm() {
           <div className="p-4 bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 rounded-lg">
             <h3 className="font-semibold text-neutral-900 dark:text-white mb-2">What this means:</h3>
             <ul className="text-sm text-neutral-700 dark:text-neutral-300 space-y-1">
-              <li>• You need {sampleSize.toLocaleString()} visitors to see variant A (control)</li>
-              <li>• You need {sampleSize.toLocaleString()} visitors to see variant B (treatment)</li>
-              <li>• This gives you {confidenceLevel}% confidence in detecting a {minimumDetectableEffect}% improvement</li>
-              <li>• With {statisticalPower}% power to avoid false negatives</li>
+              <li>You need {sampleSize.toLocaleString()} visitors to see variant A (control)</li>
+              <li>You need {sampleSize.toLocaleString()} visitors to see variant B (treatment)</li>
+              <li>This gives you {confidenceLevel}% confidence in detecting a {minimumDetectableEffect}% improvement</li>
+              <li>With {statisticalPower}% power to avoid false negatives</li>
             </ul>
           </div>
         </div>
