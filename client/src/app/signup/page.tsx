@@ -12,17 +12,18 @@ import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { parseAsInteger, useQueryState } from "nuqs";
 import React, { Suspense, useEffect, useState } from "react";
 import { addSite } from "../../api/admin/sites";
 import { RybbitLogo, RybbitTextLogo } from "../../components/RybbitLogo";
+import { SpinningGlobe } from "../../components/SpinningGlobe";
 import { useSetPageTitle } from "../../hooks/useSetPageTitle";
 import { authClient } from "../../lib/auth";
 import { useConfigs } from "../../lib/configs";
 import { IS_CLOUD } from "../../lib/const";
 import { userStore } from "../../lib/userStore";
 import { cn, isValidDomain, normalizeDomain } from "../../lib/utils";
-import { SpinningGlobe } from "../../components/SpinningGlobe";
 
 // Animation variants for step transitions
 const contentVariants = {
@@ -30,25 +31,19 @@ const contentVariants = {
   visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
 };
 
-// Client component to handle step from URL params
-function StepHandler({ onSetStep }: { onSetStep: (step: number) => void }) {
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const step = searchParams.get("step");
-    if (step && !isNaN(Number(step))) {
-      onSetStep(Number(step));
-    }
-  }, [searchParams, onSetStep]);
-
-  return null;
-}
-
-export default function SignupPage() {
+function SignupPageContent() {
   const { configs, isLoading: isLoadingConfigs } = useConfigs();
   useSetPageTitle("Rybbit · Signup");
 
   const [currentStep, setCurrentStep] = useState(1);
+  const [stepParam] = useQueryState("step", parseAsInteger);
+
+  // Sync URL step param with local state on mount
+  useEffect(() => {
+    if (stepParam && stepParam >= 1 && stepParam <= 3) {
+      setCurrentStep(stepParam);
+    }
+  }, [stepParam]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>("");
   const router = useRouter();
@@ -195,18 +190,7 @@ export default function SignupPage() {
           <motion.div initial="hidden" animate="visible" variants={contentVariants}>
             <h2 className="text-2xl font-semibold mb-4">Signup</h2>
             <div className="space-y-4">
-              {IS_CLOUD && (
-                <SocialButtons onError={setError} callbackURL="/signup?step=2" mode="signup" showDivider={false} />
-              )}
-
-              {IS_CLOUD && (
-                <div className="relative flex items-center text-xs uppercase">
-                  <div className="flex-1 border-t border-neutral-200 dark:border-neutral-800" />
-                  <span className="px-3 text-muted-foreground">Or continue with email</span>
-                  <div className="flex-1 border-t border-neutral-200 dark:border-neutral-800" />
-                </div>
-              )}
-
+              <SocialButtons onError={setError} callbackURL="/signup?step=2" mode="signup" />
               <AuthInput
                 id="email"
                 label="Email"
@@ -216,7 +200,6 @@ export default function SignupPage() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
-
               <AuthInput
                 id="password"
                 label="Password"
@@ -226,7 +209,6 @@ export default function SignupPage() {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />
-
               {IS_CLOUD && (
                 <Turnstile
                   onSuccess={token => setTurnstileToken(token)}
@@ -235,7 +217,6 @@ export default function SignupPage() {
                   className="flex justify-center"
                 />
               )}
-
               <AuthButton
                 isLoading={isLoading}
                 loadingText="Creating account..."
@@ -247,7 +228,6 @@ export default function SignupPage() {
                 Continue
                 <ArrowRight className="ml-2 h-4 w-4" />
               </AuthButton>
-
               <div className="text-center text-sm">
                 Already have an account?{" "}
                 <Link
@@ -392,11 +372,6 @@ export default function SignupPage() {
           </a>
         </div>
 
-        {/* Suspense boundary for the URL parameter handler */}
-        <Suspense fallback={null}>
-          <StepHandler onSetStep={setCurrentStep} />
-        </Suspense>
-
         <div className="flex-1 flex flex-col justify-center w-full max-w-[550px] mx-auto">
           <h1 className="text-lg text-neutral-600 dark:text-neutral-300 mb-6">Get started with Rybbit</h1>
 
@@ -470,5 +445,13 @@ export default function SignupPage() {
         <SpinningGlobe />
       </div>
     </div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={null}>
+      <SignupPageContent />
+    </Suspense>
   );
 }
