@@ -94,7 +94,11 @@ export function NoData() {
               <a href="https://rybbit.com/docs/script" className="text-blue-500 hover:underline">
                 docs
               </a>{" "}
-              for more information.
+              for more information, or{" "}
+              <a href="https://rybbit.com/docs/script-troubleshooting" className="text-blue-500 hover:underline">
+                troubleshoot
+              </a>{" "}
+              if your script isn't sending traffic.
             </span>
             {/* Framework Guide Cards */}
             <div className="">
