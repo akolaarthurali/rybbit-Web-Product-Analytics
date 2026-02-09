@@ -326,6 +326,91 @@ const STRIPE_PRICES: StripePlan[] = [
       replays: 2_000_000,
     },
   },
+  // Legacy annual price IDs (old 10-month pricing) for backward compatibility
+  {
+    priceId: "price_1RKuxUDFVprnAny2RkoZyxev",
+    name: "standard100k-annual",
+    interval: "year",
+    limits: { events: 100_000, replays: 10_000 },
+  },
+  {
+    priceId: "price_1RKuxTDFVprnAny2rDcJOwHn",
+    name: "standard250k-annual",
+    interval: "year",
+    limits: { events: 250_000, replays: 25_000 },
+  },
+  {
+    priceId: "price_1RKuxSDFVprnAny2APD1EsL4",
+    name: "standard500k-annual",
+    interval: "year",
+    limits: { events: 500_000, replays: 50_000 },
+  },
+  {
+    priceId: "price_1RKuxRDFVprnAny2f67uFcwC",
+    name: "standard1m-annual",
+    interval: "year",
+    limits: { events: 1_000_000, replays: 100_000 },
+  },
+  {
+    priceId: "price_1RKuxPDFVprnAny2NCYgKQf5",
+    name: "standard2m-annual",
+    interval: "year",
+    limits: { events: 2_000_000, replays: 200_000 },
+  },
+  {
+    priceId: "price_1RKuxKDFVprnAny2UjJFcvHQ",
+    name: "standard5m-annual",
+    interval: "year",
+    limits: { events: 5_000_000, replays: 500_000 },
+  },
+  {
+    priceId: "price_1RKuxNDFVprnAny2mjFH5swO",
+    name: "standard10m-annual",
+    interval: "year",
+    limits: { events: 10_000_000, replays: 1_000_000 },
+  },
+  {
+    priceId: "price_1SKXxHDFVprnAny2fHARdc3Z",
+    name: "standard20m-annual",
+    interval: "year",
+    limits: { events: 20_000_000, replays: 2_000_000 },
+  },
+  {
+    priceId: "price_1S8szIDFVprnAny2MfwmEsD3",
+    name: "pro100k-annual",
+    interval: "year",
+    limits: { events: 100_000, replays: 10_000 },
+  },
+  {
+    priceId: "price_1S8szHDFVprnAny2KbYorj7v",
+    name: "pro250k-annual",
+    interval: "year",
+    limits: { events: 250_000, replays: 25_000 },
+  },
+  {
+    priceId: "price_1S8szEDFVprnAny2z6M7Befa",
+    name: "pro500k-annual",
+    interval: "year",
+    limits: { events: 500_000, replays: 50_000 },
+  },
+  {
+    priceId: "price_1S8szCDFVprnAny2ujgml5hL",
+    name: "pro1m-annual",
+    interval: "year",
+    limits: { events: 1_000_000, replays: 100_000 },
+  },
+  {
+    priceId: "price_1S8szBDFVprnAny2So7DIVTb",
+    name: "pro2m-annual",
+    interval: "year",
+    limits: { events: 2_000_000, replays: 200_000 },
+  },
+  {
+    priceId: "price_1S8sz9DFVprnAny2pEnr5hXD",
+    name: "pro5m-annual",
+    interval: "year",
+    limits: { events: 5_000_000, replays: 500_000 },
+  },
 ];
 
 const TEST_TO_PRICE_ID = {
